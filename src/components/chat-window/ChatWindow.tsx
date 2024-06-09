@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { Message } from "../types";
 
@@ -13,7 +13,8 @@ export const ChatWindow: FC<ChatWindowProps> = ({
 }) => {
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (newMessage.trim()) {
       onSendMessage(newMessage);
       setNewMessage("");
@@ -30,6 +31,11 @@ export const ChatWindow: FC<ChatWindowProps> = ({
         border={1}
         borderRadius={2}
         borderColor="grey.300"
+        sx={{
+          wordWrap: "break-word",
+          overflowWrap: "break-word",
+          whiteSpace: "pre-wrap",
+        }}
       >
         {messages.map((message, index) => (
           <Typography
@@ -40,18 +46,20 @@ export const ChatWindow: FC<ChatWindowProps> = ({
           </Typography>
         ))}
       </Box>
-      <Box display="flex">
-        <TextField
-          fullWidth
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          label="Type a message"
-          variant="outlined"
-        />
-        <Button variant="contained" color="primary" onClick={handleSendMessage}>
-          Send
-        </Button>
-      </Box>
+      <form onSubmit={handleSendMessage}>
+        <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={1}>
+          <TextField
+            fullWidth
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            label="Type a message"
+            variant="outlined"
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Send
+          </Button>
+        </Box>
+      </form>
     </Box>
   );
 };

@@ -34,12 +34,12 @@ const App: FC = () => {
   return (
     <Container>
       <Grid container spacing={3} sx={{ marginTop: 2 }}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Paper elevation={3}>
             <FriendList friends={friends} onSelectFriend={handleFriendSelect} />
           </Paper>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={8}>
           <Paper elevation={3}>
             <Box p={2}>
               {selectedFriend ? (
